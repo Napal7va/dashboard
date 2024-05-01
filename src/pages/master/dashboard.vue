@@ -1,51 +1,63 @@
 <template>
   <div class="w-screen h-screen flex">
-<!--Side bar-->
+    <!--Sidebar-->
     <div class="w-[400px] h-full bg-gray-600">
       <div class="h-[50px] bg-gray-800">
         Header sidebar
       </div>
-      <div class="h-[calc(100vh-50px)] bg-gray-200">
-        menu
+      <div class="flex justify-center h-[calc(100vh-50px)] bg-gray-200">
+        <div class="p-2" v-for="(item, index) in data" :key="index">
+          <button class="hover:text-gray-500" @click="goToTable">
+            <span>{{ item.index }}</span>
+            <span class="mr-1">{{ item.title }}</span>
+            <span>{{ item.group }}</span>
+          </button>
+        </div>
       </div>
     </div>
-<!--Main-->
-  <div class="w-full h-full bg-white]">
+    <!--Main-->
+    <div class="w-full h-full bg-white]">
       <div class="w-full h-[50px] bg-gray-600">
-        <span></span>
       </div>
       <div class="h-[calc(100vh-50px)] bg-white]">
-        <Table :rows="students" :columns="columns"/>
+        <Table :students="students" :columns="columns"/>
       </div>
-      </div>
+    </div>
   </div>
 </template>
 
 <script setup>
 import Table from "@/components/Table/Table.vue";
-import {computed, ref} from "vue";
-import {useFetch} from "@vueuse/core";
+import { computed, ref } from "vue";
+import { useFetch } from "@vueuse/core";
+import { useRouter } from "vue-router";
 
-const columns = ref( [
+const router = useRouter();
+
+const columns = ref([
   { title: "ID", key: "id", minWidth: true },
   { title: "Имя ученика", key: "firstName" },
-  { title: "Фамилия", key: "lastName" }
-])
+  { title: "Фамилия", key: "lastName" },
+  { title: "Посещение", key: "value" }
+]);
 
 const url = computed(() => {
-  return `https://my-json-server.typicode.com/kosipov/1425-iro-placeholder-api/disciplines`
-})
+  return `https://my-json-server.typicode.com/kosipov/1425-iro-placeholder-api/disciplines`;
+});
 
 const { isFetching, error, data } = useFetch(url, {
   refetch: true
-}).json()
+}).json();
 
 const students = computed(() => {
-  if (data.value && data.value.length > 0) {
-    // Первый элемент массива data содержит информацию о студентах
+  if (data && data.value && data.value.length > 0) {
     return data.value[0].students;
   } else {
     return [];
   }
 });
+
+function goToTable() {
+  router.push({ name: "Table" }); // Замените "Table" на имя вашего маршрута для компонента Table.vue
+}
 </script>

@@ -1,5 +1,6 @@
 import {createRouter, createWebHistory} from 'vue-router'
 import dashboard from "@/pages/master/dashboard.vue";
+import Comp from "@/components/Comp.vue";
 import home from "@/pages/home.vue";
 
 
@@ -10,9 +11,9 @@ const routes = [
         component: dashboard
     },
     {
-        name: "Home",
-        path: "/home",
-        component: home
+        name: "Table",
+        path: "/table",
+        component: Comp
     }
 ];
 const router = Router();
