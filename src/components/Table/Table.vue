@@ -52,14 +52,14 @@ const uniqueDates = computed(() => {
 
 const saveData = () => {
   const dataToSend = {
-    date: selectedDate.value,
+    date: selectedDate.xddd,
     checkboxValues: checkboxValues.value,
   };
   sendDataToServer(dataToSend);
 };
 
 const sendDataToServer = (data) => {
-  fetch('', {
+  fetch('https://my-json-server.typicode.com/kosipov/1425-iro-placeholder-api/disciplines', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

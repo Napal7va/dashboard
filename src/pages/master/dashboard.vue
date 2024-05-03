@@ -38,7 +38,6 @@ const columns = ref([
   { title: "ID", key: "id", minWidth: true},
   { title: "Имя ученика", key: "firstName" },
   { title: "Фамилия", key: "lastName" },
-  // { title: "Посещение", key: "value" }
 ]);
 
 const url = computed(() => {
