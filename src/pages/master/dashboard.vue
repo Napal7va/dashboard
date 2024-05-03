@@ -2,8 +2,8 @@
   <div class="w-screen h-screen flex">
     <!--Sidebar-->
     <div class="w-[400px] h-full bg-gray-600">
-      <div class="h-[50px] bg-gray-800">
-        Header sidebar
+      <div class="h-[50px] bg-gray-800 text-white text-3xl text-center">
+        Giga - Dashboard
       </div>
       <div class="flex justify-center h-[calc(100vh-50px)] bg-gray-200">
         <div class="p-2" v-for="(item, index) in data" :key="index">
@@ -35,10 +35,10 @@ import { useRouter } from "vue-router";
 const router = useRouter();
 
 const columns = ref([
-  { title: "ID", key: "id", minWidth: true },
+  { title: "ID", key: "id", minWidth: true},
   { title: "Имя ученика", key: "firstName" },
   { title: "Фамилия", key: "lastName" },
-  { title: "Посещение", key: "value" }
+  // { title: "Посещение", key: "value" }
 ]);
 
 const url = computed(() => {
