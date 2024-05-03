@@ -58,6 +58,6 @@ const students = computed(() => {
 });
 
 function goToTable() {
-  router.push({ name: "Table" }); // Замените "Table" на имя вашего маршрута для компонента Table.vue
+  router.push({ name: "Table" });
 }
 </script>

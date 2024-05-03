@@ -4,7 +4,7 @@
       <thead>
       <tr>
         <th v-for="column in columns" :key="column.key" class="m-1 border">{{ column.title }}</th>
-        <th class="bg-gray-500"><input class="m-1 " type="date"> </th>
+        <th class="bg-gray-500"><input v-model="selectedDate" placeholder="Новая дата" class="m-1 " type="date"> </th>
         <th v-for="date in uniqueDates" :key="date" class="m-1 border">{{ date }}</th>
       </tr>
       </thead>
@@ -15,11 +15,10 @@
         <td class="m-1 border">{{ student.firstName }}</td>
         <td class="m-1 border">{{ student.lastName }}</td>
         <td class="m-1 border">
-          <input type="checkbox" >
+          <input type="checkbox" v-model="checkboxValues[student.id]">
         </td>
         <td v-for="stat in student.stats" :key="stat.date" class="m-1 border ">
           <input type="checkbox" v-model="stat.value" class="flex items-center">
-<!--          {{stat.value ? 'Посещение' : 'Отсутствие' }}-->
         </td>
       </tr>
       </tbody>
@@ -34,39 +33,33 @@
 <script setup>
 import { computed } from "vue";
 import { ref } from 'vue';
-
+const selectedDate = ref('');
+const checkboxValues = ref({});
 const props = defineProps({
   students: Array,
   columns: Array
 });
 
 const uniqueDates = computed(() => {
-  const dates = new Set(); // Создаем Set для хранения уникальных дат
-  props.students.forEach(student => { // Итерируемся по массиву студентов
-    student.stats.forEach(stat => { // Итерируемся по массиву статистики каждого студента
-      dates.add(stat.date); // Добавляем дату в Set
+  const dates = new Set();
+  props.students.forEach(student => {
+    student.stats.forEach(stat => {
+      dates.add(stat.date);
     });
   });
-  return Array.from(dates); // Преобразуем Set в массив и возвращаем его
+  return Array.from(dates);
 });
-// Переменная для хранения выбранной даты
-const selectedDate = ref('');
 
-// Метод для отправки данных на сервер
 const saveData = () => {
-  // Собираем данные для отправки на сервер
   const dataToSend = {
-    selectedDate: selectedDate.value,
-    // Другие данные, которые вам нужно отправить
+    date: selectedDate.value,
+    checkboxValues: checkboxValues.value,
   };
-
-  // Отправляем данные на сервер
   sendDataToServer(dataToSend);
 };
 
-// Функция для отправки данных на сервер (здесь нужно заменить на ваш реальный метод отправки данных)
 const sendDataToServer = (data) => {
-  fetch('url', {
+  fetch('', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -80,13 +73,10 @@ const sendDataToServer = (data) => {
         return response.json();
       })
       .then(data => {
-        // Обработка успешного ответа от сервера
         console.log('Данные успешно отправлены:', data);
       })
       .catch(error => {
-        // Обработка ошибок при отправке данных
         console.error('Ошибка отправки данных:', error);
       });
 };
-
 </script>
