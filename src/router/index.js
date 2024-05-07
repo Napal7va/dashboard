@@ -1,6 +1,7 @@
 import {createRouter, createWebHistory} from 'vue-router'
 import dashboard from "@/pages/master/dashboard.vue";
 import Table from '@/components/Table/Table.vue';
+import MainAdmin from "@/components/Admin/MainAdmin.vue";
 
 
 
@@ -11,9 +12,9 @@ const routes = [
         component: dashboard
     },
     {
-        name: "Table",
-        path: "/",
-        component: Table
+        name: "MainAdmin",
+        path: "/admin",
+        component: MainAdmin
     }
 ];
 const router = Router();

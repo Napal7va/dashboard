@@ -5,34 +5,41 @@
       <div class="h-[50px] bg-gray-800 text-white text-3xl text-center">
         Giga - Dashboard
       </div>
-      <div class="flex justify-center h-[calc(100vh-50px)] bg-gray-200">
+      <div class="flex-col justify-center h-[calc(100vh-50px)] bg-gray-200">
         <div class="p-2" v-for="(item, index) in data" :key="index">
-          <button class="hover:text-gray-500" @click="goToTable">
+          <button class="hover:text-gray-500" @click="showComponent('Table')">
             <span>{{ item.index }}</span>
             <span class="mr-1">{{ item.title }}</span>
             <span>{{ item.group }}</span>
           </button>
+          <button class="hover:text-gray-500" @click="showComponent('Comp')">
+            <span>Вторая таблица азазазаззазазазазаз</span>
+          </button>
         </div>
+
       </div>
     </div>
     <!--Main-->
     <div class="w-full h-full bg-white]">
-      <div class="w-full h-[50px] bg-gray-600">
+      <div class="flex justify-end items-center w-full h-[50px] bg-gray-600 p-2">
+        <button @click="showModalAdmin" class="bg-black rounded-lg text-white py-1.5 px-2 hover:bg-gray-300 hover:text-black">
+          Административная панель
+        </button>
       </div>
       <div class="h-[calc(100vh-50px)] bg-white]">
-        <Table :students="students" :columns="columns"/>
+        <component :is="selectedComponent" :students="students" :columns="columns"/>
       </div>
     </div>
   </div>
+  <ModalAdmin v-if="isModalAdminVisible" :hideModalAdmin="hideModalAdmin" />
 </template>
 
 <script setup>
 import Table from "@/components/Table/Table.vue";
+import Comp from "@/components/Comp.vue";
+import ModalAdmin from "@/components/Admin/ModalAdmin.vue";
 import { computed, ref } from "vue";
 import { useFetch } from "@vueuse/core";
-import { useRouter } from "vue-router";
-
-const router = useRouter();
 
 const columns = ref([
   { title: "ID", key: "id", minWidth: true},
@@ -56,7 +63,28 @@ const students = computed(() => {
   }
 });
 
-function goToTable() {
-  router.push({ name: "Table" });
+const selectedComponent = ref(false);
+
+function showComponent(componentName) {
+  switch (componentName) {
+    case 'Table':
+      selectedComponent.value = Table;
+      break;
+    case 'OtherComponent1':
+      selectedComponent.value = Comp;
+      break;
+    default:
+      selectedComponent.value = null;
+  }
+}
+
+const isModalAdminVisible = ref();
+
+function showModalAdmin() {
+  isModalAdminVisible.value = true;
+}
+
+function hideModalAdmin() {
+  isModalAdminVisible.value = false;
 }
 </script>
