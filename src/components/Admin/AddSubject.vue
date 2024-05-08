@@ -1,7 +1,7 @@
 <template>
   <div class="flex w-full">
     <div class="bg-white p-8 rounded-lg">
-      <h2 class="text-2xl font-bold mb-4">Изменить предмет</h2>
+      <h2 class="text-2xl font-bold mb-4">Добавить предмет</h2>
       <input v-model="item" type="text" placeholder="Предмет" class="border border-gray-300 p-2 mb-4 w-full">
       <input v-model="group" type="text" placeholder="Группа" class="border border-gray-300 p-2 mb-4 w-full">
       <input v-model="student" type="text" placeholder="Имя студента" class="border border-gray-300 p-2 mb-4 w-full">

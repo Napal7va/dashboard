@@ -4,10 +4,13 @@
       <h1 class="text-lg font-semibold">Административная панель</h1>
       <button @click="logout" class="bg-gray-300 hover:bg-gray-400 text-gray-700 font-semibold py-2 px-4 rounded">Выйти</button>
     </header>
-    <main class="flex h-screen justify-self-start">
-      <div class="flex justify-center w-[260px] p-2 h-screen bg-gray-200">
+    <main class="flex  h-screen">
+      <div class="flex flex-col pb-2.5 w-[260px] p-2 h-screen bg-gray-200">
         <div>
-          <button @click="showComponent('AddStudent')" class="bg-gray-300 rounded px-3 py-1 hover:bg-gray-400">Добавить студента</button>
+          <button @click="showComponent('AddSubject')" class="bg-gray-300 rounded px-3 py-1 hover:bg-gray-400">Добавить предмет</button>
+        </div>
+        <div>
+          <button @click="showComponent('AddStudent')" class="bg-gray-300 rounded px-3 py-1 hover:bg-gray-400">Изменить предмет</button>
         </div>
       </div>
       <!-- Здесь будет контент административной панели -->
@@ -22,6 +25,7 @@
 import { useRouter } from "vue-router";
 import {ref} from "vue";
 import AddStudent from "@/components/Admin/AddStudent.vue";
+import AddSubject from "@/components/Admin/AddSubject.vue";
 
 const router = useRouter()
 
@@ -35,6 +39,9 @@ function showComponent(componentName) {
   switch (componentName) {
     case 'AddStudent':
       selectedComponent.value = AddStudent;
+      break;
+    case 'AddSubject':
+      selectedComponent.value = AddSubject;
       break;
     default:
       selectedComponent.value = null;
