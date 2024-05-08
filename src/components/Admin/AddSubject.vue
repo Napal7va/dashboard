@@ -1,43 +1,113 @@
 <template>
-  <div class="flex w-full">
-    <div class="bg-white p-8 rounded-lg">
-      <h2 class="text-2xl font-bold mb-4">Добавить предмет</h2>
-      <input v-model="item" type="text" placeholder="Предмет" class="border border-gray-300 p-2 mb-4 w-full">
-      <input v-model="group" type="text" placeholder="Группа" class="border border-gray-300 p-2 mb-4 w-full">
-      <input v-model="student" type="text" placeholder="Имя студента" class="border border-gray-300 p-2 mb-4 w-full">
-      <div class="text-right">
-        <button @click="addStudent" class="p-2 text-gray-500 hover:text-gray-700">Добавить</button>
+  <div>
+
+    <div class="flex justify-between bg-gray-300 justify-items-start p-4">
+      <div>
+        <div class="mx-2 mb-2">
+          <span>Добавить предмет</span>
+        </div>
+        <div class="mx-2">
+          <input class="mr-2 rounded" placeholder="Название предмета">
+          <input class="mx-2 rounded" placeholder="Группа">
+        </div>
+      </div>
+      <div class="flex mr-6">
+        <button class="border-2 px-2 bg-gray-300 rounded hover:bg-gray-200" @click="saveData">Сохранить</button>
       </div>
     </div>
+
+<!--    <div class="flex justify-center">-->
+<!--      <table class="mx-4 my-2 w-full text-center table-auto">-->
+<!--        <thead>-->
+<!--        <tr>-->
+<!--          <th v-for="column in columns" :key="column.key" class="m-1 border">{{ column.title }}</th>-->
+<!--        </tr>-->
+<!--        </thead>-->
+
+<!--        <tbody>-->
+<!--        <tr v-for="(student, index) in students" :key="student.id" >-->
+<!--          <td class="m-1 border">{{ index + 1 }}</td>-->
+<!--          <td class="m-1 border">{{ student.firstName }}</td>-->
+<!--          <td class="m-1 border">{{ student.lastName }}</td>-->
+<!--          <td class="m-1 border">-->
+<!--            <button class="border-2 px-2 bg-green-500 rounded hover:bg-gray-300">Изменить</button>-->
+<!--            <button class="border-2 px-2 bg-red-500 rounded hover:bg-gray-300">Удалить</button>-->
+<!--          </td>-->
+<!--        </tr>-->
+<!--        </tbody>-->
+<!--      </table>-->
+<!--    </div>-->
+    <div class="flex justify-center">
+      <div class="mx-4 my-2">
+        <input v-model="newStudent.firstName" class="mr-2 rounded" placeholder="Имя">
+        <input v-model="newStudent.lastName" class="mx-2 rounded" placeholder="Фамилия">
+        <button @click="saveData" class="border-2 px-2 bg-blue-500 rounded hover:bg-blue-300 text-white">Добавить ученика</button>
+      </div>
+    </div>
+
   </div>
 </template>
 
 <script setup>
+import { computed } from "vue";
+import { ref } from 'vue';
+const selectedDate = ref('');
+const checkboxValues = ref({});
+const props = defineProps({
+  students: Array,
+  columns: Array
+});
 
-let item = ''
-let group = ''
-let student = ''
+const saveData = () => {
+  const dataToSend = {
+    date: selectedDate.value,
+    checkboxValues: checkboxValues.value,
+  };
+  sendDataToServer(dataToSend);
+};
 
-async function addStudent() {
-  if (item && group && student) {
-    try {
-      const response = await fetch('https://my-json-server.typicode.com/kosipov/1425-iro-placeholder-api/disciplines',{
-        method: 'POST',
-        headers: {
-          'Content-type': 'application/json'
-        },
-        body: JSON.stringify({ item, group, student })
+const sendDataToServer = (data) => {
+  fetch('https://my-json-server.typicode.com/kosipov/1425-iro-placeholder-api/disciplines', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Ошибка сети');
+        }
+        return response.json();
       })
-      if (response.ok) {
-        alert('Студент добавлен')
-      } else {
-        alert('Ошибка аутентификации')
-      }
-    } catch (error) {
-      console.error('Ошибка запроса:' ,error)
-    }
-  } else {
-    alert('Пожалуйста заполните все поля')
-  }
+      .then(data => {
+        console.log('Данные успешно отправлены:', data);
+      })
+      .catch(error => {
+        console.error('Ошибка отправки данных:', error);
+      });
+};
+  const newStudent = ref({
+  firstName: '',
+  lastName: ''
+});
+
+  // Функция для добавления нового ученика
+  const addStudent = () => {
+  // Проверка наличия имени и фамилии
+  if (newStudent.value.firstName.trim() === '' || newStudent.value.lastName.trim() === '') {
+  alert('Пожалуйста, введите имя и фамилию ученика.');
+  return;
 }
+
+  // Добавление нового ученика в список
+  students.value.push({
+  firstName: newStudent.value.firstName,
+  lastName: newStudent.value.lastName
+});
+
+  // Очистка полей ввода после добавления
+  newStudent.value.firstName = '';
+  newStudent.value.lastName = '';
+};
 </script>

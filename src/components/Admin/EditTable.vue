@@ -40,6 +40,13 @@
         </button>
       </table>
     </div>
+    <div class="flex ">
+      <div class="mx-4 my-2">
+<!--        <input v-model="newStudent.firstName" class="mr-2 rounded" placeholder="Имя">-->
+<!--        <input v-model="newStudent.lastName" class="mx-2 rounded" placeholder="Фамилия">-->
+        <button @click="saveData" class="border-2 px-2 bg-blue-500 rounded hover:bg-blue-300 text-white">Добавить ученика</button>
+      </div>
+    </div>
 
   </div>
 </template>

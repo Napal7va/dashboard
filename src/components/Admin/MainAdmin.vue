@@ -19,14 +19,7 @@
         <button class="hover:text-gray-500" @click="showComponent('Comp')">
           <span>Вторая таблица азазазаззазазазазаз</span>
         </button>
-        <div>
-          <button @click="showComponent('AddSubject')" class="bg-gray-300 rounded px-3 py-1 hover:bg-gray-400">Добавить предмет</button>
-        </div>
-        <div>
-          <button @click="showComponent('EditTable')" class="bg-gray-300 rounded px-3 py-1 hover:bg-gray-400">Изменить предмет</button>
-        </div>
       </div>
-      <!-- Здесь будет контент административной панели -->
       <div class="w-full bg-gray-100">
         <component :is="selectedComponent" :students="students" :columns="columns"/>
       </div>
@@ -85,16 +78,6 @@ function showComponent(componentName) {
     default:
       selectedComponent.value = null;
   }
-}
-
-const isModalAdminVisible = ref();
-
-function showModalAdmin() {
-  isModalAdminVisible.value = true;
-}
-
-function hideModalAdmin() {
-  isModalAdminVisible.value = false;
 }
     function logout () {
   router.push('/');
