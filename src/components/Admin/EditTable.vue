@@ -20,25 +20,25 @@
       <table class="justify-center mx-4 my-2 w-full text-center table-auto">
         <thead>
         <tr>
-          <th v-for="column in columns" :key="column.key" class="m-1 border">{{ column.title }}</th>
+          <th v-for="column in columns" :key="column.key" class="border border-gray-400 px-4 py-2">{{ column.title }}</th>
         </tr>
         </thead>
 
         <tbody>
         <tr v-for="(student, index) in students" :key="student.id" >
-          <td class="m-1 border">{{ index + 1 }}</td>
-          <td class="m-1 border">{{ student.firstName }}</td>
-          <td class="m-1 border">{{ student.lastName }}</td>
-          <td class="m-1 border">
-            <button class="border-2 px-2 bg-green-500 rounded hover:bg-gray-300">Изменить</button>
-            <button class="border-2 px-2 bg-red-500 rounded hover:bg-gray-300">Удалить</button>
+          <td class="border border-gray-400 px-4 py-2 w-1">{{ index + 1 }}</td>
+          <td class="border border-gray-400 px-4 py-2">{{ student.firstName }}</td>
+          <td class="border border-gray-400 px-4 py-2">{{ student.lastName }}</td>
+          <td class="border-b-2 px-4 py-2">
+            <button class="border-2 px-2 bg-green-500 rounded hover:bg-gray-300 text-white">Изменить</button>
+            <button class="border-2 px-2 bg-red-500 rounded hover:bg-gray-300 text-white">Удалить</button>
           </td>
         </tr>
         </tbody>
-        <div class="flex justify-center">
+        <div class="flex flex-row">
           <div class="mx-4 my-2">
-                    <input class="mr-2 rounded" placeholder="Имя">
-                    <input class="mx-2 rounded" placeholder="Фамилия">
+            <input class="mr-2 rounded" placeholder="Имя">
+            <input class="mx-2 rounded" placeholder="Фамилия">
             <button @click="saveData" class="border-2 px-2 bg-blue-500 rounded hover:bg-blue-300 text-white">Добавить ученика</button>
           </div>
         </div>
@@ -50,7 +50,6 @@
 </template>
 
 <script setup>
-import { computed } from "vue";
 import { ref } from 'vue';
 const selectedDate = ref('');
 const checkboxValues = ref({});

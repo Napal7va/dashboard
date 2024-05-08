@@ -31,7 +31,7 @@
       </tr>
       </tbody>
     </table>
-    <div class="flex justify-center">
+    <div class="flex ">
       <div class="mx-4 my-2">
         <input v-model="firstName" class="mr-2 rounded" placeholder="Имя">
         <input v-model="lastName" class="mx-2 rounded" placeholder="Фамилия">
