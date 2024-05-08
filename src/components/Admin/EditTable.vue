@@ -12,75 +12,84 @@
         </div>
       </div>
       <div class="flex mr-6">
-        <button class="border-2 px-2 bg-gray-300 rounded hover:bg-gray-200" @click="saveData">Сохранить</button>
+        <button class="border-2 px-2 bg-gray-300 rounded hover:bg-gray-200" @click="sendStudentInput">
+          Сохранить
+        </button>
       </div>
     </div>
+    <div class="flex-col">
 
-    <div class="flex justify-center">
-      <table class="justify-center mx-4 my-2 w-full text-center table-auto">
-        <thead>
-        <tr>
-          <th v-for="column in columns" :key="column.key" class="m-1 border">{{ column.title }}</th>
-        </tr>
-        </thead>
+      <div class="w-full">
+        <table class="justify-center mx-4 my-2 w-full text-center table-auto">
+          <thead>
+          <tr>
+            <th v-for="column in columns" :key="column.key" class="m-1 border">{{ column.title }}</th>
+          </tr>
+          </thead>
 
-        <tbody>
-        <tr v-for="(student, index) in students" :key="student.id" >
-          <td class="m-1 border">{{ index + 1 }}</td>
-          <td class="m-1 border">{{ student.firstName }}</td>
-          <td class="m-1 border">{{ student.lastName }}</td>
-          <td class="m-1 border">
-            <button class="border-2 px-2 bg-green-500 rounded hover:bg-gray-300">Изменить</button>
-            <button class="border-2 px-2 bg-red-500 rounded hover:bg-gray-300">Удалить</button>
-          </td>
-        </tr>
-        </tbody>
-        <button class="bg-gray-300 hover:bg-gray-400 text-gray-700 font-semibold py-2 px-4 rounded">
-          Добавить предмет
-        </button>
-      </table>
+          <tbody>
+          <tr v-for="(student, index) in students" :key="student.id" >
+            <td class="m-1 border">{{ index + 1 }}</td>
+            <td class="m-1 border">{{ student.firstName }}</td>
+            <td class="m-1 border">{{ student.lastName }}</td>
+            <td class="m-1 border">
+              <button class="border-2 px-2 bg-green-500 rounded hover:bg-gray-300">Изменить</button>
+              <button class="border-2 px-2 bg-red-500 rounded hover:bg-gray-300">Удалить</button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="flex justify-center mt-4">
+        <button @click="addStudentInput" class="bg-gray-300 hover:bg-gray-400 text-gray-700 font-semibold py-2 px-4 rounded">Добавить ученика</button>
+      </div>
+      <div v-for="(input, index) in studentInputs" :key="index" class="flex justify-center mt-4">
+        <input v-model="input.firstName" class="mr-2 rounded" placeholder="Имя">
+        <input v-model="input.lastName" class="mx-2 rounded" placeholder="Фамилия">
+        <button @click="removeStudentInput(index)" class="px-2 bg-red-500 rounded hover:bg-gray-300">Удалить</button>
+      </div>
+
     </div>
 
   </div>
 </template>
 
 <script setup>
-import { computed } from "vue";
 import { ref } from 'vue';
-const selectedDate = ref('');
-const checkboxValues = ref({});
 const props = defineProps({
   students: Array,
   columns: Array
 });
 
-const saveData = () => {
-  const dataToSend = {
-    date: selectedDate.value,
-    checkboxValues: checkboxValues.value,
-  };
-  sendDataToServer(dataToSend);
-};
 
-const sendDataToServer = (data) => {
-  fetch('https://my-json-server.typicode.com/kosipov/1425-iro-placeholder-api/disciplines', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(data),
-  })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Ошибка сети');
-        }
-        return response.json();
-      })
-      .then(data => {
-        console.log('Данные успешно отправлены:', data);
-      })
-      .catch(error => {
-        console.error('Ошибка отправки данных:', error);
-      });
-};
+const studentInputs = ref([])
+
+function addStudentInput() {
+  studentInputs.value.push({ firstName: '', lastName: '' })
+}
+
+function removeStudentInput(index) {
+  studentInputs.value.splice(index, 1)
+}
+
+async function sendStudentInput() {
+  try {
+    const response = await fetch('https://my-json-server.typicode.com/kosipov/1425-iro-placeholder-api/disciplines',{
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json'
+      },
+      body: JSON.stringify({ students: studentInputs.value })
+    });
+
+    if (response.ok) {
+      alert('Студенты добавлены');
+    } else {
+      alert('Ошибка аутентификации');
+    }
+  } catch (error) {
+    console.error('Ошибка запроса:', error);
+  }
+}
 </script>
