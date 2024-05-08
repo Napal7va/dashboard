@@ -4,21 +4,11 @@
     <div class="flex justify-between bg-gray-300 justify-items-start p-4">
       <div>
         <div class="mx-2 mb-2">
-          <span>Добавить предмет</span>
+          <span>Изменить предмет</span>
         </div>
         <div class="mx-2">
           <input class="mr-2 rounded" placeholder="Название предмета">
           <input class="mx-2 rounded" placeholder="Группа">
-        </div>
-      </div>
-      <div>
-        <div class="mx-2 mb-2">
-          <span>Добавить студента</span>
-        </div>
-        <div class="mx-2">
-          <input class="mr-2 rounded" placeholder="Группа">
-          <input class="mr-2 rounded" placeholder="Имя">
-          <input class="mx-2 rounded" placeholder="Фамилия">
         </div>
       </div>
       <div class="flex mr-6">
@@ -27,7 +17,7 @@
     </div>
 
     <div class="flex justify-center">
-      <table class="mx-4 my-2 w-full text-center table-auto">
+      <table class="justify-center mx-4 my-2 w-full text-center table-auto">
         <thead>
         <tr>
           <th v-for="column in columns" :key="column.key" class="m-1 border">{{ column.title }}</th>
@@ -45,6 +35,9 @@
           </td>
         </tr>
         </tbody>
+        <button class="bg-gray-300 hover:bg-gray-400 text-gray-700 font-semibold py-2 px-4 rounded">
+          Добавить предмет
+        </button>
       </table>
     </div>
 

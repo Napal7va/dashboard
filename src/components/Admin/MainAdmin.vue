@@ -3,13 +3,15 @@
     <header class="bg-gray-200 p-4 flex justify-between items-center">
       <h1 class="text-lg font-semibold">Административная панель</h1>
       <div>
-        <button @click="showComponent('AddSubject')" class="bg-gray-300 hover:bg-gray-400 text-gray-700 font-semibold py-2 px-4 rounded">Добавить предмет</button>
+        <button @click="showComponent('AddSubject')" class="mx-2 bg-gray-300 hover:bg-gray-400 text-gray-700 font-semibold py-2 px-4 rounded">
+          Добавить предмет
+        </button>
+        <button @click="logout" class="bg-gray-300 hover:bg-gray-400 text-gray-700 font-semibold py-2 px-4 rounded">Выйти</button>
       </div>
-      <button @click="logout" class="bg-gray-300 hover:bg-gray-400 text-gray-700 font-semibold py-2 px-4 rounded">Выйти</button>
     </header>
     <main class="flex  h-screen">
       <div class="flex flex-col pb-2.5 w-[260px] p-2 h-screen bg-gray-200 p-2" v-for="(item, index) in data" :key="index">
-        <button class="hover:text-gray-500" @click="showComponent('Table')">
+        <button class="hover:text-gray-500" @click="showComponent('EditTable')">
           <span>{{ item.index }}</span>
           <span class="mr-1">{{ item.title }}</span>
           <span>{{ item.group }}</span>
