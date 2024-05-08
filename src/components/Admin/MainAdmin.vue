@@ -21,12 +21,12 @@
           <button @click="showComponent('AddSubject')" class="bg-gray-300 rounded px-3 py-1 hover:bg-gray-400">Добавить предмет</button>
         </div>
         <div>
-          <button @click="showComponent('AddStudent')" class="bg-gray-300 rounded px-3 py-1 hover:bg-gray-400">Изменить предмет</button>
+          <button @click="showComponent('EditTable')" class="bg-gray-300 rounded px-3 py-1 hover:bg-gray-400">Изменить предмет</button>
         </div>
       </div>
       <!-- Здесь будет контент административной панели -->
-      <div class="flex justify-center w-screen bg-gray-100">
-        <component :is="selectedComponent"/>
+      <div class="w-full bg-gray-100">
+        <component :is="selectedComponent" :students="students" :columns="columns"/>
       </div>
     </main>
   </div>
@@ -38,6 +38,7 @@ import {computed, ref} from "vue";
 import AddSubject from "@/components/Admin/AddSubject.vue";
 import Table from "@/components/Table/Table.vue";
 import Comp from "@/components/Comp.vue";
+import EditTable from "@/components/Admin/EditTable.vue";
 import {useFetch} from "@vueuse/core";
 
 const router = useRouter()
@@ -73,6 +74,8 @@ function showComponent(componentName) {
       break;
     case 'OtherComponent1':
       selectedComponent.value = Comp;
+    case 'EditTable':
+      selectedComponent.value = EditTable;
       break;
     case 'AddSubject':
       selectedComponent.value = AddSubject;

@@ -52,7 +52,7 @@ const uniqueDates = computed(() => {
 
 const saveData = () => {
   const dataToSend = {
-    date: selectedDate.xddd,
+    date: selectedDate.value,
     checkboxValues: checkboxValues.value,
   };
   sendDataToServer(dataToSend);
