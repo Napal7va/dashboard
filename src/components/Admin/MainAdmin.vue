@@ -20,6 +20,7 @@
           <span>Вторая таблица азазазаззазазазазаз</span>
         </button>
       </div>
+      <!-- Здесь будет контент административной панели -->
       <div class="w-full bg-gray-100">
         <component :is="selectedComponent" :students="students" :columns="columns"/>
       </div>
@@ -79,7 +80,17 @@ function showComponent(componentName) {
       selectedComponent.value = null;
   }
 }
-    function logout () {
+
+const isModalAdminVisible = ref();
+
+function showModalAdmin() {
+  isModalAdminVisible.value = true;
+}
+
+function hideModalAdmin() {
+  isModalAdminVisible.value = false;
+}
+function logout () {
   router.push('/');
 }
 
